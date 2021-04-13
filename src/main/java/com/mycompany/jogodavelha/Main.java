@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         char continuar;
+        int jogadas;
         Jogador novoJogador;
         Scanner teclado = new Scanner(System.in);
         String nome;
@@ -38,6 +39,7 @@ public class Main {
 
             //adiciona jogadores
             System.out.println("\nJOGO DA VELHA");
+            jogadas = 0;
             for(int i = 0; i < 2; i++){
                 System.out.println("\nJogador " + (i + 1) + ": ");
                 nome = teclado.nextLine();
@@ -62,6 +64,12 @@ public class Main {
             }
             do{
                 for(int k = 0; k < 2; k++){
+                    
+                    if(jogadas == 9){
+                        System.out.println("\nNenhum jogador ganhou!!");
+                        break;
+                    }
+                    
                     if(!verificaSeGanhou(matriz, VERTICAL, HORIZONTAL, alguemGanhou)){
                         System.out.println("\nJOGO DA VELHA");
                         System.out.println("");
@@ -107,12 +115,13 @@ public class Main {
                                 }
                                 break;
                             default:
-                                System.out.println("\nOpção inválida!");
+                                System.out.println("\nOpção inválida!");   
                         }
+                        
+                        jogadas++;
                     }
                 }
-
-            }while(verificaSeGanhou(matriz, VERTICAL, HORIZONTAL, alguemGanhou) != true);
+            }while(verificaSeGanhou(matriz, VERTICAL, HORIZONTAL, alguemGanhou) != true && jogadas < 9);
             
             System.out.println("\nJogar de novo? [s] sim  [n] não");
             continuar = teclado.next().charAt(0);
@@ -145,6 +154,7 @@ public class Main {
         int contadorDiagonalSec;
         
         //verifica diagonal primaria
+        linha = new char[3];
         for(int j = 0; j < VERTICAL; j++){
             for (int i = 0; i < HORIZONTAL; i++) {
                 linha[j] = matriz[j][j];
@@ -156,12 +166,77 @@ public class Main {
         }
         
         //verifica diagonal secundaria
+        linha = new char[3];
         contadorDiagonalSec = HORIZONTAL - 1;
         for(int j = 0; j < VERTICAL; j++){
-            for (int i = 0; i < HORIZONTAL; i++) {
-                linha[j] = matriz[contadorDiagonalSec][j];
-            }
+            linha[j] = matriz[contadorDiagonalSec][j];
             contadorDiagonalSec--;
+            
+            if(linha[0] == linha[1] && linha[1] == linha[2]){
+                alguemGanhou = true;
+            }
+        }
+        
+        //verifica primeira linha
+        linha = new char[3];
+        for (int i = 0; i < HORIZONTAL; i++) {
+            linha[i] = matriz[i][0];
+//            System.out.println("linha: " + linha[0] + linha[1] + linha[2]);
+            
+            if(linha[0] == linha[1] && linha[1] == linha[2]){
+                alguemGanhou = true;
+            }
+        }
+        
+        //verifica segunda linha
+        linha = new char[3];
+        for (int i = 0; i < HORIZONTAL; i++) {
+            linha[i] = matriz[i][1];
+//            System.out.println("linha: " + linha[0] + linha[1] + linha[2]);
+            
+            if(linha[0] == linha[1] && linha[1] == linha[2]){
+                alguemGanhou = true;
+            }
+        }
+        
+        //verifica terceira linha
+        linha = new char[3];
+        for (int i = 0; i < HORIZONTAL; i++) {
+            linha[i] = matriz[i][2];
+//            System.out.println("linha: " + linha[0] + linha[1] + linha[2]);
+            
+            if(linha[0] == linha[1] && linha[1] == linha[2]){
+                alguemGanhou = true;
+            }
+        }
+        
+        //verifica primeira coluna
+        linha = new char[3];
+        for (int i = 0; i < HORIZONTAL; i++) {
+            linha[i] = matriz[0][i];
+//            System.out.println("linha: " + linha[0] + linha[1] + linha[2]);
+            
+            if(linha[0] == linha[1] && linha[1] == linha[2]){
+                alguemGanhou = true;
+            }
+        }
+        
+        //verifica segunda coluna
+        linha = new char[3];
+        for (int i = 0; i < HORIZONTAL; i++) {
+            linha[i] = matriz[1][i];
+//            System.out.println("linha: " + linha[0] + linha[1] + linha[2]);
+            
+            if(linha[0] == linha[1] && linha[1] == linha[2]){
+                alguemGanhou = true;
+            }
+        }
+        
+        //verifica terceira coluna
+        linha = new char[3];
+        for (int i = 0; i < HORIZONTAL; i++) {
+            linha[i] = matriz[2][i];
+//            System.out.println("linha: " + linha[0] + linha[1] + linha[2]);
             
             if(linha[0] == linha[1] && linha[1] == linha[2]){
                 alguemGanhou = true;
